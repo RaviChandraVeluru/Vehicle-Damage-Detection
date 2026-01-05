@@ -1,5 +1,4 @@
 import torch
-from openpyxl.styles.builtins import output
 from torch import nn
 from torchvision import models, transforms
 from PIL import Image
