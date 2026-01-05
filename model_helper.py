@@ -3,7 +3,9 @@ from openpyxl.styles.builtins import output
 from torch import nn
 from torchvision import models, transforms
 from PIL import Image
-
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model", "saved_model.pth")
 trained_model = None
 class_names = ['Front Breakage', 'Front Crushed', 'Front Normal', 'Rear Breakage', 'Rear Crushed', 'Rear Normal']
 num_classes = len(class_names)
@@ -41,7 +43,9 @@ def predict(image_path):
 
     if not trained_model:
         trained_model = CarClassifierResNet(num_classes = num_classes)
-        trained_model.load_state_dict(torch.load('model/saved_model.pth',map_location=device))
+        trained_model.load_state_dict(
+            torch.load(MODEL_PATH, map_location=device)
+        )
         trained_model.eval()
 
     with torch.no_grad():
